@@ -9,4 +9,4 @@ CreateClient
 random
 time
 threading
-selenium
+webbrowser
