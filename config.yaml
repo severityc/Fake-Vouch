@@ -1,0 +1,15 @@
+VouchOwner: [1130686206871621642]
+
+# vouch channel
+ChannelId: '1206072498584821811'
+
+# time it takes to send vouches
+TimeLimit: {
+  low: 0 ,
+  high: 0
+}
+
+formats: ['vouch' , 'rep' , '+vouch' , '+rep']
+
+# total number of vouches
+Number: 99
