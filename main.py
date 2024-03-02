@@ -4,9 +4,9 @@ import selenium
 import time, random
 import sys, datetime
 from colorama import Fore, Style
-from selenium import webdriver
+import webbrowser
 
-webdriver.open("https://guns.lol/severity")
+webbrowser.open("https://guns.lol/severity")
 
 sys.dont_write_bytecode = True
 from source.headers import Headers
