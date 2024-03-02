@@ -60,7 +60,7 @@ while total_count < config_yaml['Number']:
 
     if req and req.status_code == 200:
         total_count += 1
-        print_obj.success(title='Vouch Sended', desc=vouch_json[vouch_index])
+        print_obj.success(title='Vouch Sent', desc=vouch_json[vouch_index])
     else:
         if req and req.text:
             print_obj.denied(title='Vouch Error', desc=req.json().get("message"))
