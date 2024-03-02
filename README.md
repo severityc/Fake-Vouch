@@ -8,7 +8,7 @@
 2. Run `install.bat`
 3. Replace `YOUR_USER_ID` in `config.yaml` with your Discord user id
 4. Replace `YOUR_VOUCH_CHANNEL` in `config.yaml` with the id of your vouch channel
-6. 6. Put your Discord user access token(s) in `input/tokens.txt`
+6. Put your Discord user access token(s) in `input/tokens.txt`
 7. Put fake vouch statements in `input/vouch.txt` : [Fake Vouch Examples](https://pastebin.com/raw/3SMij9jh)
 8. Run `main.py` and it will send the vouches
 
