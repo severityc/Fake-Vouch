@@ -2,6 +2,3 @@ pyyaml
 colorama
 datetime
 requests
-random
-time
-threading
