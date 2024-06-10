@@ -23,7 +23,7 @@
 ---
 
 ### 📸 Tutorial
-(Soon)
+https://www.youtube.com/watch?v=WlqUNyZypbE
 
 ---
 
