@@ -1,4 +1,0 @@
-pyyaml
-colorama
-datetime
-requests
