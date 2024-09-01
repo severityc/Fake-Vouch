@@ -4,7 +4,7 @@
 ---
 
 ### ⚙️ Installation
-1. Install [Python 3.11.6](https://www.python.org/downloads/release/python-3116/) and make sure to add it to path
+1. Install [Python](https://www.python.org/) and make sure to add it to path
 2. Run `install.bat` / `pip install -r requirements.txt` in directory
 3. Replace `YOUR_USER_ID` in `input/config.json` with your Discord user id
 4. Replace `YOUR_VOUCH_CHANNEL` in `input/config.json` with the id of your vouch channel
