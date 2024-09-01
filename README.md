@@ -18,7 +18,7 @@
 
 ### 📄 Features
 1. Fully customizable vouches : `input/reasons.txt`
-2. Customizable settings (format, timelimit, quantity) : `config.json`
+2. Customizable settings (format, timelimit, quantity) : `input/config.json`
 
 ---
 
