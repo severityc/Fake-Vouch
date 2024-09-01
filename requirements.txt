@@ -1,4 +1,5 @@
-pyyaml
-colorama
-datetime
 requests
+random
+time
+json
+os
