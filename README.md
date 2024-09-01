@@ -23,7 +23,8 @@
 ---
 
 ### 📸 Tutorial
-https://www.youtube.com/watch?v=WlqUNyZypbE
+https://www.youtube.com/watch?v=WlqUNyZypbE (OUTDATED)
+https://www.youtube.com/watch?v=pl_mItPpAek (NEW)
 
 ---
 
