@@ -1,89 +1,97 @@
-import yaml
-import threading
-import selenium
-import time, random
-import sys, datetime
-from colorama import Fore, Style
-import webbrowser
+# Made by Severityc on Github | Licensed (MIT)
+# This was made for educational purposes only
+# Find the latest version at https://github.com/severityc/Fake-Vouch
+# Updated 09/01/2024
 
-webbrowser.open("https://guns.lol/hooked")
+import requests
+import random
+import time
+import json
+import os 
 
-sys.dont_write_bytecode = True
-from source.headers import Headers
-from source.client import CreateClient
+DARK_BLUE = '\033[34m'
+NEON_GREEN = '\033[92m'
+RESET = '\033[0m'
 
-config_yaml = yaml.safe_load(open("config.yaml", "r"))
-token_json = open('input/tokens.txt').read().split("\n")
-vouch_json = open(f"input/vouch.txt", encoding="utf-8").read().split("\n")
+def title_fuck():
+    ascii_art = """
+ _____ _    _  _______  __     _____  _   _  ____ _   _ 
+|  ___/ \\  | |/ / ____| \\ \\   / / _ \\| | | |/ ___| | | |      Made By Severityc
+| |_ / _ \\ | ' /|  _|    \\ \\ / / | | | | | | |   | |_| |     github.com/severityc/Fake-Vouch
+|  _/ ___ \\| . \\| |___    \\ V /| |_| | |_| | |___|  _  |
+|_|/_/   \\_\\_|\\_\\_____|    \\_/  \\___/ \\___/ \\____|_| |_|
+    """
+    print(f"{DARK_BLUE}{ascii_art}{RESET}")
+    print(f"{NEON_GREEN}Made by Severityc | github.com/severityc{RESET}")
 
-client = CreateClient()
-token_index = vouch_index = total_count = 0
-random.shuffle(vouch_json)
-random.shuffle(token_json)
+def clear_console():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-class Printer:
-    def __init__(self) -> None:
-        self.lock = threading.Lock()
-    
-    def curr_time(self):
-        data = datetime.datetime.now().strftime("%H:%M:%S")
-        return data
+def load_config():
+    with open("input/config.json", "r", encoding="utf-8") as config_file:
+        return json.load(config_file)
 
-    def success(self, title: str, desc: str):
-        self.lock.acquire()
-        time = Printer.curr_time(self)
-        print(
-            f"""{Fore.LIGHTBLACK_EX}[{time}] [{total_count}] {Fore.LIGHTBLUE_EX}{title}{Fore.LIGHTWHITE_EX} : {Fore.LIGHTGREEN_EX}{desc}{Style.RESET_ALL}"""
-        )
-        self.lock.release()
+def load_lines(file_path):
+    with open(file_path, "r", encoding="utf-8") as file:
+        return file.read().splitlines()
 
-    def denied(self, title: str, desc: str):
-        self.lock.acquire()
-        time = Printer.curr_time(self)
-        print(
-            f"""{Fore.LIGHTBLACK_EX}[{time}] [{total_count}] {Fore.LIGHTYELLOW_EX}{title}{Fore.LIGHTWHITE_EX} : {Fore.LIGHTRED_EX}{desc}{Style.RESET_ALL}"""
-        )
-        self.lock.release()
+def send_messages(config, tokens, messages):
+    user_id = config['user_id']
+    channel_id = config['channel_id']
+    wait_time = config['wait_time']
+    message_count = config['message_count']
+    vouch_format = ['vouch', 'rep', '+vouch', '+rep']
 
-print_obj = Printer()
-while total_count < config_yaml['Number']:
-    format_str = random.choice(config_yaml['formats'])
-    vouch_json[vouch_index] = vouch_json[vouch_index].rstrip()
-    req = None
-    try:
-        req = client.post(
-            url="https://discord.com/api/v9/channels/{}/messages".format(config_yaml['ChannelId']),
-            headers=Headers.get_headers(client, token_json[token_index]),
-            json={
-                "content": "{} <@{}> {}".format(
-                    format_str, random.choice(config_yaml['VouchOwner']), vouch_json[vouch_index])
+    useragent_headers = {
+        "authority": "discord.com",
+        "accept": "*/*",
+        "accept-language": "en-US",
+        "connection": "keep-alive",
+        "content-type": "application/json",
+        "origin": "https://discord.com",
+        "referer": "https://discord.com/channels/@me",
+        "sec-ch-ua": '"Not?A_Brand";v="8", "Chromium";v="108"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Windows"',
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9015 Chrome/108.0.5359.215 Electron/22.3.2 Safari/537.36",
+        "x-debug-options": "bugReporterEnabled",
+        "x-discord-locale": "en-US",
+        "x-discord-timezone": "America/New_York",
+    }
+
+    title_fuck()  
+
+    for token in tokens:
+        headers = useragent_headers.copy()
+        headers["Authorization"] = token
+
+        for _ in range(message_count):
+            reason_message = random.choice(messages)
+            user_ping = f"<@{user_id}>"
+            rep_command = random.choice(vouch_format)
+            message_content = f"{rep_command} {user_ping} {reason_message}"
+
+            message_payload = {
+                "content": message_content
             }
-        )
-    except:
-        pass
 
-    if req and req.status_code == 200:
-        total_count += 1
-        print_obj.success(title='Vouch Sent', desc=vouch_json[vouch_index])
-    else:
-        if req and req.text:
-            print_obj.denied(title='Vouch Error', desc=req.json().get("message"))
-        else:
-            print_obj.denied(title='Vouch Error', desc="Request Not Sent") 
-    
-    vouch_index += 1
-    token_index += 1
+            response = requests.post(f"https://discord.com/api/v9/channels/{channel_id}/messages", headers=headers, json=message_payload)
 
-    if vouch_index >= len(vouch_json):
-        random.shuffle(vouch_json)
-        vouch_index = 0
+            if response.status_code == 200:
+                print(f"{DARK_BLUE}Vouch Sent {RESET}: {NEON_GREEN}{message_content}{RESET}")
+            else:
+                print(f"Failed to send message. Status code: {response.status_code}")
 
-    if token_index >= len(token_json):
-        random.shuffle(token_json)
-        token_index = 0
-    
-    rand_time = random.randint(
-        int(config_yaml['TimeLimit']['low']), 
-        int(config_yaml['TimeLimit']['high'])
-    )
-    time.sleep(rand_time)
+            time.sleep(wait_time)
+
+if __name__ == "__main__":
+    title_fuck()  
+    input("Press Enter to start the Fake Vouch...")
+    clear_console()  
+    config = load_config()
+    tokens = load_lines("input/tokens.txt")
+    messages = load_lines("input/reasons.txt")
+    send_messages(config, tokens, messages)
