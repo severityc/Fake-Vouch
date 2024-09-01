@@ -29,7 +29,7 @@
 ---
 
 ### ⭐ Updates 
-I will be updating this code at 16 stars.
+Next update at 50 stars
 
 ---
 
