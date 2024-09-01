@@ -17,8 +17,8 @@
 ---
 
 ### 📄 Features
-1. Fully customizable vouches : `input/vouch.txt`
-2. Customizable settings (format, timelimit, quantity) : `config.yaml`
+1. Fully customizable vouches : `input/reasons.txt`
+2. Customizable settings (format, timelimit, quantity) : `config.json`
 
 ---
 
